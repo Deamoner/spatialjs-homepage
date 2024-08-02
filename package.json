@@ -1,7 +1,7 @@
 {
-  "name": "nextra-docs-template",
+  "name": "@spatialjs/docs",
   "version": "0.0.1",
-  "description": "Nextra docs template",
+  "description": "SpatialJS documentation",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,15 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+    "url": "git+https://github.com/deamoner/spatialjs-homepage.git"
   },
   "author": "Shu Ding <g@shud.in>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shuding/nextra-docs-template/issues"
+    "url": "https://github.com/deamoner/spatialjs-homepage/issues"
   },
-  "homepage": "https://github.com/shuding/nextra-docs-template#readme",
+  "homepage": "https://github.com/deamoner/spatialjs-homepage#readme",
   "dependencies": {
+    "@react-three/drei": "^9.109.2",
+    "@react-three/uikit": "^0.4.0",
     "next": "^13.0.6",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "18.11.10",
+    "raw-loader": "^4.0.2",
     "typescript": "^4.9.3"
   }
 }
