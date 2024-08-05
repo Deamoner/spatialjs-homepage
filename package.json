@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/deamoner/spatialjs-homepage.git"
   },
-  "author": "Shu Ding <g@shud.in>",
+  "author": "Matthew Davis AKA Deamoner",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/deamoner/spatialjs-homepage/issues"
