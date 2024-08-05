@@ -1,23 +1,21 @@
-# Nextra Docs Template 
+# @spatialjs/core Docs
 
-This is a template for creating documentation with [Nextra](https://nextra.site).
 
-[**Live Demo →**](https://nextra-docs-template.vercel.app)
+SpatialJS is a groundbreaking framework that revolutionizes the way we interact with digital spaces. It empowers developers to create immersive Spatial Operating Applications, breaking free from traditional 2D interfaces and ushering in a new era of 3D computing environments. With SpatialJS, you're not just building applications; you're architecting new realities that seamlessly blend the digital and physical worlds, paving the way for the future of the Open Web and redefining the paradigm of human-computer interaction.
 
-[![](.github/screenshot.png)](https://nextra-docs-template.vercel.app)
+Coming Soon...
 
-## Quick Start
+Currently, SpatialJS is in closed alpha. We're working on getting the core library ready for public release. Stay tuned!
 
-Click the button to clone this repository and deploy it on Vercel:
+## Installation
 
-[![](https://vercel.com/button)](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fshuding%2Fnextra-docs-template&showOptionalTeamCreation=false)
+You can install spatial-js using npm:
 
-## Local Development
+```bash
+npm install @spatialjs/core
+```
 
-First, run `pnpm i` to install the dependencies.
+## Usage
 
-Then, run `pnpm dev` to start the development server and visit localhost:3000.
 
-## License
 
-This project is licensed under the MIT License.

@@ -19,7 +19,6 @@
   "homepage": "https://github.com/deamoner/spatialjs-homepage#readme",
   "dependencies": {
     "@react-three/drei": "^9.109.2",
-    "@react-three/uikit": "^0.4.0",
     "next": "^13.0.6",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
