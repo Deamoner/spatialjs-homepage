@@ -12,11 +12,11 @@
     "url": "git+https://github.com/deamoner/spatialjs-homepage.git"
   },
   "author": "Matthew Davis AKA Deamoner",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/deamoner/spatialjs-homepage/issues"
   },
-  "homepage": "https://github.com/deamoner/spatialjs-homepage#readme",
+  "homepage": "https://www.spatialjs.dev/",
   "dependencies": {
     "@react-three/drei": "^9.109.2",
     "next": "^13.0.6",

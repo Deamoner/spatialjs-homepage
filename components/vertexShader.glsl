@@ -1,10 +1,11 @@
 uniform sampler2D uPositions;
+uniform vec3 uOffset;
 uniform float uTime;
 
 void main() {
   vec3 pos = texture2D(uPositions, position.xy).xyz;
 
-  vec4 modelPosition = modelMatrix * vec4(pos, 1.0);
+  vec4 modelPosition = modelMatrix * vec4(pos + uOffset, 1.0);
   vec4 viewPosition = viewMatrix * modelPosition;
   vec4 projectedPosition = projectionMatrix * viewPosition;
 

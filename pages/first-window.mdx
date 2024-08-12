@@ -1,0 +1,72 @@
+# First Window
+
+Welcome to the first window of SpatialJS! This is a simple window that will help you get started with SpatialJS.
+
+## Prerequisites
+
+- Basic knowledge of React and JavaScript
+- Node.js and npm installed on your system
+- React
+
+## Projects to be Firmilar 
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginBottom: '20px', flexWrap: 'wrap' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+    <a href="https://github.com/pmndrs/react-three-fiber" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/React_Three_Fiber-000000?style=for-the-badge&logo=react&logoColor=white" alt="React Three Fiber" />
+    </a>
+    <a href="https://twitter.com/0xca0a" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/@0xca0a-000000?style=for-the-badge&logo=twitter&logoColor=white" alt="Paul Henschel Twitter" />
+    </a>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+    <a href="https://github.com/pmndrs/react-xr" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/React_XR-000000?style=for-the-badge&logo=react&logoColor=white" alt="React XR" />
+    </a>
+    <a href="https://twitter.com/BelaBohlender" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/@BelaBohlender-000000?style=for-the-badge&logo=twitter&logoColor=white" alt="Bela Bohlenderl Twitter" />
+    </a>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+    <a href="https://github.com/pmndrs/uikit" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/React_Three_UI_Kit-000000?style=for-the-badge&logo=react&logoColor=white" alt="React Three UI Kit" />
+    </a>
+    <a href="https://twitter.com/BelaBohlender" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/@BelaBohlender-000000?style=for-the-badge&logo=twitter&logoColor=white" alt="Bela Bohlender Twitter" />
+    </a>
+  </div>
+</div>
+
+## Installation
+
+Install SpatialJS Core and its peer dependencies:
+
+```bash
+npm install @spatialjs/core react @react-three/fiber three @react-three/uikit
+```
+## Quick Start
+
+1. Add the WindowManager to your scene  
+```tsx
+import { WindowManager, createWindow } from "@spatialjs/core";
+<WindowManager />
+```
+
+2. Creating your first Window UI using UI KIT
+```typescript
+import { WindowUI } from "@spatialjs/core";
+
+const MyWindow = () => {
+  return 
+    <Container>
+            <Text>Hello World</Text>
+    </Container>
+}
+```
+
+2. Add a Window to your scene  
+```tsx
+import { createWindow } from "@spatialjs/core";
+const window = createWindow(<MyWindow />, {
+  title: "My Window",
+});
+```

@@ -1,5 +1,34 @@
 {
   "index": "Introduction",
+  "getting-started": "Getting Started",
+  "first-window": "Your First Window",
+  "--": {
+    "type": "separator",
+    "title": "Core Concepts"
+  },
+  "creating-managing": "Creating and Managing Windows",
+  "properties-customization": "Window Properties and Customization",
+  "tiling-arranging": "Tiling and Arranging Windows",
+  "interaction-focus": "Window Interaction and Focus",
+  "appearance": "Window Appearance",
+  "window-store": "Using WindowStore",
+  "advanced-features": "Advanced Window Features",
+  "---": {
+    "type": "separator",
+    "title": "Advanced Topics"
+  },
+  "multiple-windows": "Performance Optimization",
+  "responsive-design": "Responsive Spatial Interfaces",
+  "vr-ar-implementation": "VR/AR Implementation",
+  "----": {
+    "type": "separator",
+    "title": "Resources"
+  },
+  "tutorials": "Tutorials",
+  "showcase": "Showcase",
+  "api-reference": "API Reference",
+  "contributing": "Contributing",
+  "support": "Support",
   "about": {
     "title": "About",
     "type": "page"
