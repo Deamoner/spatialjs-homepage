@@ -1,17 +1,18 @@
 {
   "index": "Introduction",
-  "getting-started": "Getting Started",
+  "get-started": "Getting Started",
   "first-window": "Your First Window",
+  "examples": "Examples",
+  "tutorials": "Tutorials",
   "--": {
     "type": "separator",
     "title": "Core Concepts"
   },
-  "creating-managing": "Creating and Managing Windows",
+  "window-store": "WindowStore",
   "properties-customization": "Window Properties and Customization",
+  "appearance": "Window Appearance",
   "tiling-arranging": "Tiling and Arranging Windows",
   "interaction-focus": "Window Interaction and Focus",
-  "appearance": "Window Appearance",
-  "window-store": "Using WindowStore",
   "advanced-features": "Advanced Window Features",
   "---": {
     "type": "separator",
@@ -24,10 +25,6 @@
     "type": "separator",
     "title": "Resources"
   },
-  "tutorials": "Tutorials",
-  "showcase": "Showcase",
-  "api-reference": "API Reference",
-  "contributing": "Contributing",
   "support": "Support",
   "about": {
     "title": "About",

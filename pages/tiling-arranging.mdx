@@ -1,0 +1,38 @@
+# Window Management System
+
+This system provides a flexible and powerful way to manage windows in a 3D environment, including tiling, focusing, and various window operations.
+
+## Key Features
+
+- Window creation and management
+- Multiple tiling modes (grid, around, cockpit)
+- Window focusing and unfocusing
+- Window minimizing and maximizing
+- Dynamic position and scale adjustments
+
+## Tiling Modes
+
+The system supports three tiling modes:
+
+1. **Grid**: Arranges windows in a grid pattern.
+2. **Around**: Positions windows in a circular arrangement.
+3. **Cockpit**: Places windows in a cockpit-like configuration.
+
+## Core Components
+
+### WindowStore
+
+The WindowStore is the central state management system for windows. It uses Zustand for state management and provides various methods for window manipulation.
+
+#### Key Methods:
+
+- `addWindow(window: WindowInf)`: Add a new window to the system.
+- `removeWindow(id: string)`: Remove a window from the system.
+- `tileWindows(mode: 'grid' | 'around' | 'cockpit', adjustScale?: boolean)`: Arrange windows according to the specified tiling mode.
+- `focus(id: string)`: Bring a window into focus.
+- `unfocus(id: string)`: Remove focus from a window.
+- `minimize(id: string)`: Minimize a window.
+- `maximize(id: string)`: Maximize a window.
+- `close(id: string)`: Close a window.
+- `resetWindowPositions()`: Reset all windows to their original positions.
+

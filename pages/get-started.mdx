@@ -1,5 +1,3 @@
-# Getting Started
-
 # Getting Started with SpatialJS
 
 Welcome to SpatialJS! This guide will help you get up and running with our powerful library for creating immersive 3D spatial interfaces using React, R3f, UIKit and Three.js.
@@ -8,12 +6,12 @@ Welcome to SpatialJS! This guide will help you get up and running with our power
 
 SpatialJS is a cutting-edge library that allows you to easily create and manage 3D windows in a spatial environment. It's built on top of React, R3f, UIKit and Three.js, providing a familiar and intuitive API for web developers.
 
-## Prerequisites
+## What should you know first?
 
-Before you begin, make sure you have:
-
-- Basic knowledge of React and JavaScript
-- Node.js and npm installed on your system
+1. [React](https://react.dev/)
+2. [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
+3. [Three.js](https://threejs.org/)
+4. [UIKit](https://github.com/pmndrs/uikit)
 
 ## Quick Start
 
@@ -21,7 +19,7 @@ Follow these steps to create your first SpatialJS application:
 
 1. Install SpatialJS and its dependencies
 2. Set up a basic React application
-3. Create your first 3D window
+3. Create your first Spatial Window
 4. Customize and interact with your spatial interface
 
 Let's dive in and start building amazing 3D experiences with SpatialJS!
@@ -38,29 +36,22 @@ Let's dive in and start building amazing 3D experiences with SpatialJS!
 First, install SpatialJS and its peer dependencies:
 
 ```bash
-npm install @spatialjs/core react @react-three/fiber @react-three/uikit three
+npm install @spatialjs/core react @react-three/fiber @react-three/uikit three @types/three
 ```
 
 ## Creating Your First Window
 
-To create your first window, import the `Window` component from `spatialjs/core` and use it to render your window.
+To create your first window, import the `WindowManager` component from `spatialjs/core` and use it to render your window.
 
 ```jsx
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Text } from '@react-three/uikit';
-import { Window } from '@spatialjs/core';
+import { WindowManager } from '@spatialjs/core';
 function App() {
   return (
     <Canvas>
-      <Window
-        title="My First Window"
-        position={[0, 0, -5]}
-        width={2}
-        height={1.5}
-      >
-        <Text>Hello, SpatialJS!</Text>
-      </Window>
+      <WindowManager />
     </Canvas>
   );
 }
@@ -69,57 +60,73 @@ export default App;
 
 In this example, we're creating a single window with a title, position, and dimensions. The `WindowManager` component is responsible for managing all windows in the scene.
 
-## Managing Single Windows
+## Create a Component that we can create a Window out of
 
 You can create and manage windows directly via props in JSX. Here's an example of how to create a window with more advanced properties:
 
 ```jsx
-import React, { useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Window, WindowManager } from '@spatialjs/core';
-import { Text } from '@react-three/uikit';
-function App() {
-  const [isOpen, setIsOpen] = useState(true);
+import React from 'react';
+import { Text, Container } from '@react-three/uikit';
+function HelloWorld() {
   return (
-    <Canvas>
-      <WindowManager>
-        <Window
-          title="Advanced Window"
-          position={[0, 0, -5]}
-          width={3}
-          height={2}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onMinimize={() => console.log('Window minimized')}
-          onMaximize={() => console.log('Window maximized')}
-        >
-          <Text>
-            This window has more advanced properties and event handlers.
-          </Text>
-        </Window>
-      </WindowManager>
-    </Canvas>
+    <Container>
+      <Text>Hello, World!</Text>
+    </Container>
   );
 }
 export default App;
 ```
 
-This example demonstrates how to use various window properties and event handlers to create a more interactive window.
+This example demonstrates how to create a basic Hellow World Component
+
+## Now Create a Window out of that component 
+
+Now we can create a Spatialjs Window out of the HelloWorld Component. 
+Simply use the 'createWindow' function or the useWindowStore.add to create a window.
+It's best to do this inside the Apps first load from react useEffect.
+
+```jsx
+useEffect(() => {
+  createWindow(<HelloWorld />, {
+    id: 'hello-world', // optional - if not provided, a unique id will be generated
+    title: 'Hello, World!', // optional - if not provided, the component name will be used
+    position: [0, 0, -5], // optional - if not provided, the window will be created at the center of the scene
+    width: 2, // optional - if not provided, the window will be created with a width of 2
+    height: 1.5, // optional - if not provided, the window will be created with a height of 1.5
+  });
+}, []);
+
+```
+
+The id is a unique id, so if you don't want multiple of the same window, specify an id.
 
 ## Working with Multiple Windows
 
-SpatialJS allows you to create and manage multiple windows in your 3D space. You can also use different tiling methods to organize your windows. Here's an example of how to work with multiple windows:
+SpatialJS allows you to create and manage multiple windows in your 3D space. 
+You can also use different tiling methods to organize your windows. Here's an example of how to work with multiple windows:
 
 ```jsx
 import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Window, WindowManager, useTileWindows } from 'spatialjs';
+import { WindowManager, useWindowStore } from 'spatialjs';
 function App() {
-  const [windows, setWindows] = useState([
-    { id: 1, title: 'Window 1', content: 'Content 1' },
-    { id: 2, title: 'Window 2', content: 'Content 2' },
-    { id: 3, title: 'Window 3', content: 'Content 3' },
-  ]);
+  const windowStore = useWindowStore();
+
+  const handleHelloWorldWindow = () => {
+    windowStore.addWindow( {
+      id: 'hello-world',
+      title: 'Hello, World!',
+      position: [0, 0, -5],
+      content: <HelloWorld />,
+      width: 2,
+      height: 1.5,
+    });
+  };
+
+  const handleTileWindows = () {
+    windowStore.tileWindows('grid');
+  }
+  
   const { addWindow, tileWindows, resetWindowPositions } = useWindowStore(
     (state) => ({
       addWindow: state.addWindow,
@@ -156,19 +163,41 @@ function App() {
   }, []);
 
   return (
-    <Canvas>
-      <OrbitControls
-        enableZoom={false}
-        enablePan={false}
-        rotateSpeed={0.5}
-        minPolarAngle={Math.PI / 2}
-        maxPolarAngle={Math.PI / 2}
-      />
-      <Background />
-      <WindowManager />
-      <ambientLight intensity={0.5} />
-    </Canvas>
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <Canvas>
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          rotateSpeed={0.5}
+          minPolarAngle={Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
+        />
+        <Background />
+        <WindowManager />
+        <ambientLight intensity={0.5} />
+      </Canvas>
+      <div style={{ position: 'absolute', top: 10, left: 10 }}>
+          <button onClick={addRandomWindow}>Add Random Position Window</button>
+          <button onClick={handleHelloWorldWindow}>Add Hello World</button>
+          <button onClick={handleTileWindows}>Tile Windows</button>
+        </div>
+    </div>
   );
 }
 export default App;
 ```
+
+## Great Start 
+
+Now your off to a great start. You can see how to create single basic windows, how to add multiple windows, and some basic ways to manage those windows. 
+
+What's next? 
+
+1. Customizing Windows - Advanced looks at using UIKit to customize windows 
+2. Using the Window Store - Look at the API for the WindowStore and what you can do with that to manage windows, and customizing your experience. 
+3. Interactions - How to customize your interactions for your Spatial Applications, Interactivity, Window Focus Management 
+4. Advanced - Dive into more advanced topics
+5. Tutorials - Look over and go through out tutorials 
+
+The world is waiting for your SpatialJS Application. Go create the future you want to see in the world.
+
