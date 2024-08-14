@@ -87,7 +87,7 @@ It's best to do this inside the Apps first load from react useEffect.
 
 ```jsx
 useEffect(() => {
-  createWindow(<HelloWorld />, {
+  createWindow(HelloWorld, {
     id: 'hello-world', // optional - if not provided, a unique id will be generated
     title: 'Hello, World!', // optional - if not provided, the component name will be used
     position: [0, 0, -5], // optional - if not provided, the window will be created at the center of the scene
@@ -95,7 +95,6 @@ useEffect(() => {
     height: 1.5, // optional - if not provided, the window will be created with a height of 1.5
   });
 }, []);
-
 ```
 
 The id is a unique id, so if you don't want multiple of the same window, specify an id.
@@ -117,13 +116,13 @@ function App() {
       id: 'hello-world',
       title: 'Hello, World!',
       position: [0, 0, -5],
-      content: <HelloWorld />,
+      component: HelloWorld,
       width: 2,
       height: 1.5,
     });
   };
 
-  const handleTileWindows = () {
+  const handleTileWindows = () => {
     windowStore.tileWindows('grid');
   }
   
@@ -146,7 +145,8 @@ function App() {
       title: isImageWindow ? `Image Window ${id}` : `Text Window ${id}`,
       position: new Vector3(Math.random() * 8 - 4, Math.random() * 8 - 4, -5),
       scale: new Vector3(1, 1, 1),
-      content: isImageWindow ? <ImageWindow /> : <TextWindow id={id} />,
+      component: isImageWindow ? ImageWindow : TextWindow,
+      props: isImageWindow ? {} : { id },
       width,
       height,
       isMinimized: false,
@@ -200,4 +200,3 @@ What's next?
 5. Tutorials - Look over and go through out tutorials 
 
 The world is waiting for your SpatialJS Application. Go create the future you want to see in the world.
-

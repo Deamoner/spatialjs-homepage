@@ -88,9 +88,9 @@ Now add it to the scene inside the `<Canvas>` tag:
 To add the window to your scene, you can use the hook useWindowStore or the createWindow function to create windows when you think they should appear. 
 The simplest form of that is to add it in when the R3f application starts using the useEffect hook in React:
 
-```tsx 
+```tsx
 useEffect(() => {
-    createWindow(<MusicPlayer />, {
+    createWindow(MusicPlayer, {
       title: 'Music Player',
       width: 400,
       height: 400,
@@ -99,11 +99,3 @@ useEffect(() => {
     });
   }, []);
 ```
-
-
-
-
-
-
-
-

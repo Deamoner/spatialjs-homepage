@@ -67,7 +67,35 @@ const MyWindow = () => {
 2. Add a Window to your scene  
 ```tsx
 import { createWindow } from "@spatialjs/core";
-const window = createWindow(<MyWindow />, {
+const window = createWindow(MyWindow, {
   title: "My Window",
 });
 ```
+
+Now that you have created your first window you should have some basic knowledge of how windows are made.
+Otherwise the interior content of the window can be anything you want to include. 
+A typical usecase would be to add the window on first load of the app. Here is an example of that. 
+
+3. Add Window on App Load 
+
+```jsx
+const App = () => {
+  useEffect(() => {
+    createWindow(HelloWorld, {
+      id: 'hello-world', // optional - if not provided, a unique id will be generated
+      title: 'Hello, World!', // optional - if not provided, the component name will be used
+      position: [0, 0, -5], // optional - if not provided, the window will be created at the center of the scene
+      width: 2, // optional - if not provided, the window will be created with a width of 2
+      height: 1.5, // optional - if not provided, the window will be created with a height of 1.5
+    });
+  }, []);
+ return (
+  <>
+    <windowManager />
+  </>
+ )
+}
+
+```
+
+These are the basic of creating your first window. Next you can review how to do more advanced things with the windows. 
