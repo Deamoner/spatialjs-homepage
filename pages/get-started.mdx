@@ -13,12 +13,39 @@ SpatialJS is a cutting-edge library that allows you to easily create and manage 
 3. [Three.js](https://threejs.org/)
 4. [UIKit](https://github.com/pmndrs/uikit)
 
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginBottom: '20px', flexWrap: 'wrap' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+    <a href="https://github.com/pmndrs/react-three-fiber" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/React_Three_Fiber-000000?style=for-the-badge&logo=react&logoColor=white" alt="React Three Fiber" />
+    </a>
+    <a href="https://twitter.com/0xca0a" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/@0xca0a-000000?style=for-the-badge&logo=twitter&logoColor=white" alt="Paul Henschel Twitter" />
+    </a>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+    <a href="https://github.com/pmndrs/react-xr" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/React_XR-000000?style=for-the-badge&logo=react&logoColor=white" alt="React XR" />
+    </a>
+    <a href="https://twitter.com/BelaBohlender" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/@BelaBohlender-000000?style=for-the-badge&logo=twitter&logoColor=white" alt="Bela Bohlenderl Twitter" />
+    </a>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+    <a href="https://github.com/pmndrs/uikit" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/React_Three_UI_Kit-000000?style=for-the-badge&logo=react&logoColor=white" alt="React Three UI Kit" />
+    </a>
+    <a href="https://twitter.com/BelaBohlender" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/@BelaBohlender-000000?style=for-the-badge&logo=twitter&logoColor=white" alt="Bela Bohlender Twitter" />
+    </a>
+  </div>
+</div>
+
 ## Quick Start
 
 Follow these steps to create your first SpatialJS application:
 
-1. Install SpatialJS and its dependencies
-2. Set up a basic React application
+1. Set up a basic React application
+2. Install SpatialJS and its dependencies
 3. Create your first Spatial Window
 4. Customize and interact with your spatial interface
 
@@ -43,7 +70,7 @@ npm install @spatialjs/core react @react-three/fiber @react-three/uikit three @t
 
 To create your first window, import the `WindowManager` component from `spatialjs/core` and use it to render your window.
 
-```jsx
+```tsx
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Text } from '@react-three/uikit';
@@ -60,11 +87,12 @@ export default App;
 
 In this example, we're creating a single window with a title, position, and dimensions. The `WindowManager` component is responsible for managing all windows in the scene.
 
-## Create a Component that we can create a Window out of
+## Use a React Component as a Window or Spatial Application
 
-You can create and manage windows directly via props in JSX. Here's an example of how to create a window with more advanced properties:
+You can create and manage windows directly via props in JSX. Use React-three uikit for the UI elements in windows. 
+Here's an example of how to create a window with more advanced properties:
 
-```jsx
+```tsx
 import React from 'react';
 import { Text, Container } from '@react-three/uikit';
 function HelloWorld() {
@@ -79,20 +107,19 @@ export default App;
 
 This example demonstrates how to create a basic Hellow World Component
 
-## Now Create a Window out of that component 
+## Create a Spatial Window of that component 
 
 Now we can create a Spatialjs Window out of the HelloWorld Component. 
-Simply use the 'createWindow' function or the useWindowStore.add to create a window.
+Simply use the 'createWindow' function or the useWindowStore.addWindow to create a window.
+The createWindow function is easiest as it'll use the default store, and set the default values for you.
 It's best to do this inside the Apps first load from react useEffect.
 
-```jsx
+```tsx
 useEffect(() => {
   createWindow(HelloWorld, {
     id: 'hello-world', // optional - if not provided, a unique id will be generated
     title: 'Hello, World!', // optional - if not provided, the component name will be used
     position: [0, 0, -5], // optional - if not provided, the window will be created at the center of the scene
-    width: 2, // optional - if not provided, the window will be created with a width of 2
-    height: 1.5, // optional - if not provided, the window will be created with a height of 1.5
   });
 }, []);
 ```
@@ -104,7 +131,7 @@ The id is a unique id, so if you don't want multiple of the same window, specify
 SpatialJS allows you to create and manage multiple windows in your 3D space. 
 You can also use different tiling methods to organize your windows. Here's an example of how to work with multiple windows:
 
-```jsx
+```tsx
 import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { WindowManager, useWindowStore } from 'spatialjs';

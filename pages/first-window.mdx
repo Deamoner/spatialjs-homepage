@@ -1,6 +1,6 @@
 # First Window
 
-Welcome to the first window of SpatialJS! This is a simple window that will help you get started with SpatialJS.
+Welcome to the first real window of SpatialJS! This is a simple window that will help you get started with SpatialJS.
 
 ## Prerequisites
 
@@ -9,6 +9,7 @@ Welcome to the first window of SpatialJS! This is a simple window that will help
 - React
 
 ## Projects to be Firmilar 
+
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginBottom: '20px', flexWrap: 'wrap' }}>
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
     <a href="https://github.com/pmndrs/react-three-fiber" target="_blank" rel="noopener noreferrer">
@@ -53,7 +54,7 @@ import { WindowManager, createWindow } from "@spatialjs/core";
 
 2. Creating your first Window UI using UI KIT
 ```typescript
-import { WindowUI } from "@spatialjs/core";
+import { Container, Text } from "@react-three/uikit";
 
 const MyWindow = () => {
   return (
@@ -85,8 +86,6 @@ const App = () => {
       id: 'hello-world', // optional - if not provided, a unique id will be generated
       title: 'Hello, World!', // optional - if not provided, the component name will be used
       position: [0, 0, -5], // optional - if not provided, the window will be created at the center of the scene
-      width: 2, // optional - if not provided, the window will be created with a width of 2
-      height: 1.5, // optional - if not provided, the window will be created with a height of 1.5
     });
   }, []);
  return (
@@ -98,4 +97,16 @@ const App = () => {
 
 ```
 
+Read through our [Responsive Design](./responsive-design.mdx) section to understand responsive windows.
+
 These are the basic of creating your first window. Next you can review how to do more advanced things with the windows. 
+
+Features of Windows you may need:
+
+- Set the Props of the React Component for the Window - ``` props: {album: album} ```
+- Disable Background of the main part of the window - ``` disableBackground: true ```
+- Disable the Titlebar - ``` disableTitleBar: true ```
+- Disable the Action Buttons - ``` disableActionBtns: true ```
+- Set an Icon for the Window - ``` icon: "/spotify.png" ```
+
+These are just a few of the options you might need. To look at advanced usages, check out the sections on [WindowStore](./window-store) and [Advanced Features](./advanced-features).

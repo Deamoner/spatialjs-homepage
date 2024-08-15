@@ -1,0 +1,117 @@
+# Window Properties and Customization
+
+This guide explains how to customize windows using the WindowInf interface from the windowStore and demonstrates practical usage with examples:
+
+## Table of Contents:
+1. WindowInf Interface
+2. Customizing Windows
+3. Window Management Examples
+4. Integration with @react-three/uikit
+
+## WindowInf Interface
+The WindowInf interface defines the properties that can be customized for each window. Here are the key properties:
+```tsx
+export interface WindowInf {
+  id: string;
+  title: string;
+  subtitle?: string;
+  icon?: string;
+  position: Vector3;
+  component: React.ComponentType<any>;
+  props: any;
+  width: number;
+  height: number;
+  isMinimized: boolean;
+  isFullscreen: boolean;
+  scale: Vector3;
+  isFocused?: boolean;
+  isClosable?: boolean;
+  isResizable?: boolean;
+  isMovable?: boolean;
+  lookAt?: Vector3;
+  followCamera?: boolean;
+  onClose?: () => void;
+  onMinimize?: () => void;
+  onFocus?: () => void;
+  disableTiling?: boolean;
+  disableTitleBar?: boolean;
+  disableIcon?: boolean;
+  disableActionBtns?: boolean;
+  disableBackground?: boolean;
+  disableAdjustSize?: boolean;
+  opacity?: number;
+  rotation?: Euler;
+}
+```
+Customizing Windows
+To customize a window, you can use the addWindow function from the useWindowStore hook. Here's an example of how to add a customized window:
+```tsx
+const { addWindow } = useWindowStore();
+
+addWindow({
+  id: 'customWindow',
+  title: 'Custom Window',
+  position: new Vector3(0, 0, -5),
+  component: CustomComponent,
+  props: { customProp: 'value' },
+  width: 300,
+  height: 200,
+  isResizable: true,
+  isMovable: true,
+  disableTiling: false,
+  opacity: 0.9,
+});
+```
+You can adjust any of the properties defined in the WindowInf interface to customize the window's appearance and behavior.
+Window Management Examples
+The WindowManagement.tsx file provides examples of how to manage windows using the useWindowStore hook. Here are some key functionalities:
+
+1. Listing active windows:
+```tsx
+   const { windows } = useWindowStore();
+```
+Removing a window:
+```tsx
+   const { removeWindow } = useWindowStore();
+   removeWindow(id);
+```
+Focusing a window:
+```tsx
+   const { focus } = useWindowStore();
+   focus(id);
+```
+4. Scaling a window:
+```tsx
+   const { setScale } = useWindowStore();
+   setScale(id, new Vector3(1.2, 1.2, 1.2));
+```
+Tiling windows:
+```tsx
+   const { tileWindows } = useWindowStore();
+   tileWindows('grid', true);
+``` 
+Resetting window positions:
+```tsx
+   const { resetWindowPositions } = useWindowStore();
+   resetWindowPositions();
+```
+
+Integration with @react-three/uikit
+The window management system integrates seamlessly with @react-three/uikit, a library for building performant 3D user interfaces for Three.js using React Three Fiber and Yoga.
+You can use uikit components like Container, Text, and Card to create the window content and management interface. For example:
+
+```tsx
+import { Container, Text } from '@react-three/uikit';
+
+// Inside your component
+return (
+  <Container flexDirection="column" alignItems="flex-start" padding={20}>
+    <Text fontSize={24} marginBottom={20}>Window Examples</Text>
+    
+  </Container>
+);
+```
+
+This integration allows you to create responsive and visually appealing 3D user interfaces for your window management system.
+For more information on using uikit components and their properties, refer to the uikit documentation.
+By leveraging the WindowInf interface, the useWindowStore hook, and uikit components, you can create a highly customizable and interactive window management system for your 3D applications.

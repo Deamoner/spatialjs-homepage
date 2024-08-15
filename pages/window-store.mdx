@@ -1,0 +1,56 @@
+# WindowStore
+
+The WindowStore is a powerful state management solution for handling windows in a 3D spatial environment. It uses Zustand for state management and provides a comprehensive set of functions to manipulate windows.
+
+## Table of Contents:
+1. WindowStore Interface
+2. Key Functionalities
+3. Usage Examples
+4. Integration with React Three Fiber
+
+## WindowStore Interface
+
+The WindowStore interface defines the state and methods for managing windows in a 3D spatial environment:
+
+```tsx
+interface WindowStore {
+  windows: Record<string, WindowInf>;
+  defaultTileDistance: number;
+  defaultFocusDistance: number;
+  addWindow: (
+    window: Omit<WindowInf, "component" | "props"> & {
+      component: React.ComponentType<any>;
+      props?: any;
+    }
+  ) => void;
+  removeWindow: (id: string) => void;
+  updateWindow: (id: string, updates: Partial<WindowInf>) => void;
+  updateWindowProps: (id: string, props: any) => void;
+  setPosition: (id: string, position: Vector3) => void;
+  setScale: (id: string, scale: Vector3) => void;
+  setRotation: (id: string, rotation: Euler) => void;
+  minimize: (id: string) => void;
+  maximize: (id: string) => void;
+  focus: (id: string) => void;
+  unfocus: (id: string) => void;
+  close: (id: string) => void;
+  tileWindows: (
+    mode: "grid" | "around" | "cockpit",
+    adjustScale?: boolean
+  ) => void;
+  resetWindowPositions: () => void;
+  originalPositions: Record<string, Vector3>;
+  originalScales: Record<string, Vector3>;
+  updateWindowSize: (id: string, size: Vector2) => void;
+  recalculateTilePositions: () => void;
+  currentTileMode: "grid" | "around" | "cockpit" | null;
+  camera: Camera | null;
+  setCamera: (camera: Camera) => void;
+  resetWindowInfrontOfCamera: () => void;
+  getPointInFrontOfCamera: (distance: number) => Vector3;
+  debug: boolean;
+  setDebug: (value: boolean) => void;
+  selectedWindow: string | undefined;
+  setSelectedWindow: (id: string) => void;
+}
+```
