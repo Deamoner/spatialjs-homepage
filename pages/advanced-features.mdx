@@ -1,0 +1,126 @@
+# Advaned Features 
+
+This section will look at different advanced features of SpatialJS and how to use them.
+
+1. Debugging
+2. Custom Headers
+3. Listing Windows 
+
+# Debugging 
+
+To debug you will want to use the `useWindowStore` hook to get access to the `windowStore`. Set debug = true to see the windows in the scene.
+
+
+```tsx
+const windowStore = useWindowStore();
+windowStore.debug = true;
+```
+
+# Custom Headers
+
+Custom Headers can be acheived right now by simplify overriding the Windows, and add your own header setup plus a custom window area. 
+The music player example has a custom header setup. 
+
+To accomplish this simplify disable the background on the Window:
+
+```tsx
+createWindow(HelloWorld, {
+  disableBackground: true,
+});
+```
+
+Add your own Container Header and Regular Window Background as you see fit. 
+Below is the Room Example Music Player with a custom branded header and main window.
+You can find the full code for the music player [here](https://github.com/Deamoner/spatialjs-room-example).
+
+```tsx 
+const MusicPlayer: React.FC = () => {
+  const abumConRef = useRef<any>(null);
+  const [text, setText] = useState("");
+  const setCurrentAlbum = useAlbumStore((state) => state.setCurrentAlbum);
+  const selectAlbum = (album: Album) => {
+    createWindow(AlbumWindow, {
+      title: album.name,
+      props: { album: album },
+      width: 100,
+      height: 100,
+    });
+    setCurrentAlbum(album);
+  };
+
+  return (
+    <>
+      <Card positionType="absolute" width="95%" height={55} padding={10}>
+        <Image src="Spotify.png" width={100} height={60} objectFit="cover" />
+        <Container
+          width="100%"
+          height="100%"
+          justifyContent="flex-end"
+          alignItems="center"
+        >
+          <Input
+            width={150}
+            height={30}
+            value={text}
+            onValueChange={setText}
+            placeholder="Search..."
+            prefix={<Search />}
+          />
+        </Container>
+      </Card>
+      <Card
+        marginTop={75}
+        paddingLeft={10}
+        width="100%"
+        height={185}
+        justifyContent="center"
+        flexDirection="column"
+      >
+        <Container
+          paddingBottom={12}
+          scrollbarOpacity={0.5}
+          scrollbarWidth={2}
+          scrollbarColor={colors.mutedForeground}
+          ref={abumConRef}
+          width={600}
+          height={200}
+          alignItems="auto"
+          justifyContent="flex-start"
+          flexDirection="row"
+          overflow="scroll"
+        >
+          {albums.map((album) => (
+            <AlbumArtwork
+              key={album.name}
+              album={album}
+              width={100}
+              height={100}
+              onClick={(e: any) => {
+                e.stopPropagation();
+                selectAlbum(album);
+              }}
+            />
+          ))}
+        </Container>
+      </Card>
+    </>
+  );
+};
+```
+
+Now you can see how to get all the benefits of the SpatialJS with Windows, Window Management(Tiling, Layout, Z-Ordering), and Custom Designs.
+
+# Listing Windows 
+
+If you want to list all the Windows for any purpose to create a default menu, you can use the `useWindowStore` hook to get access to the `windowStore`.
+
+```tsx
+const windowStore = useWindowStore();
+const windows = windowStore.windows;
+```
+
+# What else? 
+
+What else are you trying to do that might be advanced? Join our discord and we'll help you out or open a ticket on our github.
+- [Discord](https://discord.gg/tKNwtpDVJn)
+- [Github](https://github.com/Deamoner/spatialjs)

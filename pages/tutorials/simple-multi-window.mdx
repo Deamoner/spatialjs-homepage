@@ -1,1 +1,135 @@
 # Simple Multi Window Example 
+
+This tutorial will guide you through creating a simple multi-window application using SpatialJS. We'll create three windows: a main control window and two content windows.
+
+## Prerequisites
+
+Make sure you have completed the [Simple Window Tutorial](./simple-window.mdx) and have a basic R3F app set up with SpatialJS installed.
+
+We will skip over having the basic r3f setup, and how to create a window.
+
+1. Creating your 2nd Window 
+2. Understanding the Window Management Built in to SpatialJS 
+3. Understanding Window Focus and Usage 
+4. Understanding Selected
+5. Helper Functions for Placement 
+6. Tiling Windows 
+7. Self Managing Windows
+
+## Step 1: Create your 2nd Window 
+
+In the first tutorial we created a single window. It was a simple window and you didn't get to see the complication as multiple windows start to be used. 
+Now we are going to show you adding a 2nd Window. How to do some basic management of it. 
+
+Let's assume you don't want multiple of the same window to be open at once. The ```id``` property is what we need to do that. 
+The id field is unique per window. If you do not set the id, q unique one will be set, and SpatialJS will create a new window every time call the create.
+
+```tsx
+const window = createWindow({
+  id: "my-window",
+  title: "My Window",
+});
+```
+
+## Step 2: Understanding the Window Management Built in to SpatialJS 
+
+SpatialJS has a built in window management system. It allows you to create windows, manage them, and handle their placement. 
+This operates similarly to the window management system in your OS. It'll help you handle the placement of windows in a tiled or non-tiled manner. 
+Something taken for granted in a flat screen OS. In this tutorial we'll cover how to create a simple multi-window application using SpatialJS.
+
+Now above you created a 2nd window. How to handle the placement of the window. 
+If you set the Window not to tile, it will not not be placed infront of the camera on first open. It will not tile to infront of the user when when store tile function is called. 
+These functions are on by default and the most common case, but may not always be the desired behavior. If you disable these things, you will want to set a starting position for the window.
+
+```tsx
+const window = createWindow({
+  id: "my-window",
+  title: "My Window",
+  disableTiling: true,
+  position: new THREE.Vector3(
+    0.7054231986607751,
+    4.288817243461132,
+    -6.841060185432433
+  ),
+});
+```
+
+Now your window will not tile, and will not be placed infront of the camera on first open. It will not tile to infront of the user when the user requests to tile the windows from the window store. 
+You can access the list of windows and move this window at any time. This will animate the window to the new position.
+
+```tsx
+const { windows, setPosition } = useWindowStore();
+const window = windows["my-window"];
+setPosition("my-window", new THREE.Vector3(0, 0, 0));
+```
+
+## Understanding Focus 
+
+Windows have a focus state. This is a Window that is currently in focus and thus has been brought forward infront of the user. 
+With multiple Windows, this can be useful for many different use cases and is treated seperately from tiling. This means that when the Windows are tiled, the focus window will be infront of the tiled windows.
+To set the focus window, you can use the ```focus``` function.
+
+```tsx
+const { focus } = useWindowStore();
+focus("my-window");
+```
+
+You can unfocus the window by using the ```unfocus``` function.
+
+```tsx
+const { unfocus } = useWindowStore();
+unfocus();
+```
+
+These actions are automatically included in the BaseWindow component via the Actions Buttons in the titlebar.
+
+## Understanding Selected 
+
+Windows can be selected and the store will store the selected Window to be used as a reference for anything. 
+This is useful for when you want to move a window, but you don't know which one to move. The default behavior is the last window created is set to selected by default. 
+The BaseWindow will automatically set a window to selected or deselect it when you click on the titlebar.
+You can use the ```select``` function to select a window.
+
+```tsx
+const { selectedWindow, setSelectedWindow } = useWindowStore();
+setSelectedWindow("my-window");
+```
+
+This can be useful as you can see in the Music Player Example if you want the user to be able to move the window around after first load. 
+
+## Step 3: Helper Functions for Placement 
+
+The store has a few helper functions for placing windows in order to make the common tasks easier. 
+To get the location infront of the camera you can use the ```getPointInFrontOfCamera``` function.
+This will return a THREE.Vector3 that is 3 units infront of the camera.
+
+```tsx
+const { getPointInFrontOfCamera } = useWindowStore();
+const point = getPointInFrontOfCamera(3);
+```
+
+Now if you wanted to create your own tiling method you can can use that to place the window infront of the camera. 
+
+## Step 4: Tiling Windows 
+
+If you want to tile the windows, you can use the ```tileWindows``` function. This will tile the windows to the left and right of the camera.
+Currently there are 3 different tiling methods available. 
+- ```grid``` - This will tile the windows on a flat plane at the center point infront of the camera
+- ```around``` - This will tile the windows around the camera in a circle at the height of the camera 
+- ```cockpit``` - This will tile the windows like a cockpit view infront of the camera
+
+```tsx
+const { tileWindows } = useWindowStore();
+tileWindows('grid');
+```
+
+## Step 5: Self Managing Windows 
+
+You can self manage the windows. This means you can manage there positions as a group by simpling using the utility functions to move them around and set the store to the new positions. 
+
+```tsx
+const { windows, setPosition } = useWindowStore();
+for (const window in windows) { 
+    setPosition(window, new THREE.Vector3(0, 0, 0));
+}
+```

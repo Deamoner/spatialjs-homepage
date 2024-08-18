@@ -36,3 +36,25 @@ The WindowStore is the central state management system for windows. It uses Zust
 - `close(id: string)`: Close a window.
 - `resetWindowPositions()`: Reset all windows to their original positions.
 
+## Example Usage 
+
+```tsx
+import { useWindowStore } from '@react-three/window-manager';
+
+const { tileWindows } = useWindowStore();
+tileWindows('grid');
+```
+
+## Opting out of Tiling 
+
+In many cases you may not want a window to be tiled. You can disable the default of tiling with `disableTiling`.
+
+```tsx
+createWindow({
+    id: 'music-player',
+    title: 'Music Player',
+    width: 100,
+    height: 100,
+    disableTiling: true,
+});
+```

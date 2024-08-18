@@ -1,0 +1,26 @@
+# Appearance - Theming and Customization
+
+SpatialJS is built with React and uses the R3f and UIKit library for styling. If you want to create custom Windows all you have to do is to create a React Component and pass it to the `createWindow` function. 
+You can create windows using custom designs and hide the default background and titlebar very easily. 
+
+## Hide the Main Window Background 
+
+```tsx
+createWindow(HelloWorld, {
+  disableBackground: true,
+});
+```
+
+## Hide the Titlebar
+
+```tsx
+createWindow(HelloWorld, {
+  disableTitlebar: true,
+});
+```
+
+In this way we make it easy to use the benefits of the SpatialJS in existing UIKit apps that have a theme setup. 
+Simply setup your own theme and components as use those in your Window Components. 
+
+In the future we will enable theme passing for setting the theme using these standard files. 
+But for now you can use the UIKit components and theme setup as you normally do. 

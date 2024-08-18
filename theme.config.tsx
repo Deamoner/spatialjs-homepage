@@ -9,7 +9,8 @@ const config: DocsThemeConfig = {
   chat: {
     link: "https://discord.gg/tKNwtpDVJn",
   },
-  docsRepositoryBase: "https://github.com/Deamoner/spatialjs-homepage",
+  docsRepositoryBase:
+    "https://github.com/Deamoner/spatialjs-homepage/tree/main/",
   footer: {
     text: "SpatialJS",
   },

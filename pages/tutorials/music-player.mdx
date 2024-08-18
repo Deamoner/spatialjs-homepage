@@ -9,7 +9,9 @@
 
 This guide will walk you through creating a 3D music player using SpatialJS, React Three Fiber, and related libraries. We'll create a spatial interface with windows for controls and visualizations.
 
-Live Edit: [Try it on CodeSandbox](https://codesandbox.io/p/github/Deamoner/spatialjs-room-example/main?import=true)
+GitHub Repo: [SpatialJS Music Player](https://github.com/Deamoner/spatialjs-room-example)
+
+Live Edit: [Try it on CodeSandbox](https://codesandbox.io/p/github/Deamoner/spatialjs-music-player/main?import=true)
 
 ## Installation
 
@@ -99,3 +101,188 @@ useEffect(() => {
     });
   }, []);
 ```
+
+Now you can see the window in the scene. But we want to create the full music player interface. 
+You can grab an Album Array from the example or create your own. 
+
+
+Let's create a simple array of albums:
+
+```tsx
+const albums = [
+   {
+      name: 'Code in My Veins',
+      artist: 'Deamoner',
+      cover: 'https://cdn2.suno.ai/image_c7b46b4d-4ac2-41f6-b8ed-10096e69850d.jpeg',
+      audio: 'https://cdn2.suno.ai/audio_c7b46b4d-4ac2-41f6-b8ed-10096e69850d.mp3',
+      video: 'Code in My Veins.mp4'
+    },
+    {
+      name: 'Sudo Bash',
+      artist: 'Deamoner',
+      cover: 'https://cdn2.suno.ai/image_39ef534d-e9f4-4db5-8f82-22d2b2edaa35.jpeg',
+      audio: 'https://cdn2.suno.ai/audio_39ef534d-e9f4-4db5-8f82-22d2b2edaa35.mp3',
+      video: 'sudo bash.mp4'
+    }
+];
+```
+
+Now let's add react component to show the Album in the Music Player:
+
+```tsx 
+import { Container, Text, Image } from "@react-three/uikit";
+import { Album } from "./Albums";
+import { ComponentPropsWithoutRef } from "react";
+import { colors } from "../theme";
+
+export function AlbumArtwork({
+  album,
+  aspectRatio = "portrait",
+  width,
+  height,
+  ...props
+}: {
+  album: Album;
+  aspectRatio?: "portrait" | "square";
+} & Omit<ComponentPropsWithoutRef<typeof Container>, "aspectRatio">) {
+  return (
+    <Container
+      flexShrink={0}
+      flexDirection="column"
+      gap={12}
+      {...props}
+      padding={10}
+    >
+      <Image
+        borderRadius={6}
+        src={album.cover}
+        width={width}
+        height={height}
+        objectFit="cover"
+        aspectRatio={aspectRatio === "portrait" ? 3 / 4 : 1}
+      />
+      <Container
+        flexDirection="column"
+        gap={4}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Text fontWeight="medium" fontSize={8} lineHeight="100%">
+          {album.name}
+        </Text>
+        <Text fontSize={8} lineHeight={16} color={colors.mutedForeground}>
+          {album.artist}
+        </Text>
+      </Container>
+    </Container>
+  );
+}
+```
+
+Now we can create a scrollable container in the music player to show the albums. Here we also create a function to open a new window for the selected album.
+
+```tsx
+
+const AlbumsList: React.FC = ({albums}) => {
+    const selectAlbum = (album: Album) => {
+        createWindow(AlbumWindow, {
+            title: album.name,
+            props: { album: album },
+            width: 100,
+            height: 100,
+        });
+    };
+    return (
+        <Card
+        marginTop={75}
+        paddingLeft={10}
+        width="100%"
+        height={185}
+        justifyContent="center"
+        flexDirection="column"
+      >
+        <Container
+          paddingBottom={12}
+          scrollbarOpacity={0.5}
+          scrollbarWidth={2}
+          scrollbarColor={colors.mutedForeground}
+          ref={abumConRef}
+          width={600}
+          height={200}
+          alignItems="auto"
+          justifyContent="flex-start"
+          flexDirection="row"
+          overflow="scroll"
+        >
+          {albums.map((album) => (
+            <AlbumArtwork
+              key={album.name}
+              album={album}
+              width={100}
+              height={100}
+              onClick={(e: any) => {
+                e.stopPropagation();
+                selectAlbum(album);
+              }}
+            />
+    );
+};
+```
+
+Now let's modify the MusicPlayer to Include it. 
+
+```tsx
+const MusicPlayer: React.FC = () => {
+    return (
+        <Container>
+            <Text>Music Player</Text>
+            <AlbumsList albums={albums} />
+        </Container>
+    );
+};
+```
+
+Next we need to create the Album Window. 
+
+```tsx
+const AlbumWindow: React.FC = ({album}) => {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    return (
+        <Container
+        marginTop={55}
+        margin="auto"
+        width={150}
+        height="100%"
+        justifyContent="center"
+        alignItems="center"
+      >
+          <Video
+            key={album.name}
+            src={album.video}
+            width="100%"
+            height="75%"
+            objectFit="cover"
+            borderRadius={10}
+            autoplay
+            loop
+            ref={videoRef}
+          />
+       
+      </Container>
+    );
+};
+```
+
+Now in this setup, you can see the album list in the music player and when you click on an album, it opens a new window with the album video.
+The issue will be UX wise is that a new window will open and play for all the albums. We need to create a new window for the music player and add the album list to it.
+
+In the example you can see how we used a central store for that, and allowed multiple windows but only one to play. That is beyond the scope of this basic Music Player Tutorial. 
+But you can see in the example repo how we handled that and look at more advanced usages for over riding the UI and creating custom windows. 
+
+Feel free to checkout the example repo for more details. 
+
+Otherwise you can checkout some of the more advanced topics:
+- [Advanced Features](/advanced-features)
+- [Custom Appearance](/appearance)
+
+

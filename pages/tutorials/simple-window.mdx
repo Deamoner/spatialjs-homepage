@@ -1,1 +1,72 @@
 # Simple Window Tutorial
+
+This tutorial is meant to give a basic overview of implementing a Window in SpatialJS. 
+It is not meant to be a full fledged Spatial Application, but rather a basic overview of how to get started with SpatialJS.
+
+Before we start with the basics of getting your first single SpatiaJS Window, let's start with a basic R3f scene and application.
+
+To start with a basic React Three Fiber (R3F) app, you can use the following npx commands:
+
+```bash
+npx create-r3f-app hello-world
+```
+
+## Installation
+
+Install SpatialJS Core and its peer dependencies:
+
+```bash
+npm install @spatialjs/core react @react-three/fiber three @react-three/uikit
+```
+## Quick Start
+
+1. Add the WindowManager to your scene  
+```tsx
+import { WindowManager, createWindow } from "@spatialjs/core";
+<WindowManager />
+```
+
+2. Creating your first Window UI using UI KIT
+```typescript
+import { Container, Text } from "@react-three/uikit";
+
+const MyWindow = () => {
+  return (
+    <Container>
+            <Text>Hello World</Text>
+    </Container>
+  )
+}
+```
+
+2. Add a Window to your scene  
+```tsx
+import { createWindow } from "@spatialjs/core";
+const window = createWindow(MyWindow, {
+  title: "My Window",
+});
+```
+
+Now that you have created your first window you should have some basic knowledge of how windows are made.
+Otherwise the interior content of the window can be anything you want to include. 
+A typical usecase would be to add the window on first load of the app. Here is an example of that. 
+
+3. Add Window on App Load 
+
+```jsx
+const App = () => {
+  useEffect(() => {
+    createWindow(HelloWorld, {
+      id: 'hello-world', // optional - if not provided, a unique id will be generated
+      title: 'Hello, World!', // optional - if not provided, the component name will be used
+      position: [0, 0, -5], // optional - if not provided, the window will be created at the center of the scene
+    });
+  }, []);
+ return (
+  <>
+    <WindowManager />
+  </>
+ )
+}
+
+```
