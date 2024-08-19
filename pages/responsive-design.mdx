@@ -1,0 +1,88 @@
+# Responsive Design for SpatialJS Windows
+
+When creating Windows in SpatialJS, it's important to design them to be responsive and adaptable to different sizes and orientations. This guide will help you create flexible and responsive windows using UIKit components.
+
+## Understanding UIKit's Layout System
+
+UIKit uses a flexbox-based layout system, which is perfect for creating responsive designs. The key components for creating responsive layouts are:
+
+1. `Container`: The main layout component
+2. `Flex`: For flexible layouts
+3. `Grid`: For grid-based layouts
+
+## Creating a Responsive Window
+
+Let's create a basic responsive window structure:
+
+```tsx
+import { Container, Flex, Text } from '@react-three/uikit';
+
+const ResponsiveWindow = () => {
+  return (
+    <Container width="100%" height="100%" padding={20} flexDirection="column">
+      <Flex direction="column" gap={10}>
+        <Text fontSize={24}>Responsive Window</Text>
+    </Container>
+  );
+};
+```
+
+This structure creates a full-width and full-height container with padding, and uses `Flex` components for layout.
+
+## Using Percentage-Based Sizing
+
+To make your window content responsive, use percentage-based sizing for width and height:
+
+```tsx
+<Container flexDirection="row" gap={10}>
+  <Container width="30%" backgroundColor="gray">
+    <Text>Sidebar</Text>
+  </Container>
+  <Container width="70%" backgroundColor="lightgray">
+    <Text>Main Content</Text>
+  </Container>
+</Container>
+```
+
+## Handling Window Resizing
+
+When a window is resized in SpatialJS, you may need to update the layout. You can use the `onResize` callback provided by the window management system:
+
+```tsx
+import { useWindowStore } from '@spatialjs/core';
+
+const ResponsiveWindow = ({ id }) => {
+  const { updateWindow } = useWindowStore();
+
+  const handleResize = (width, height) => {
+    // Update layout based on new dimensions
+    updateWindow(id, { width, height });
+  };
+
+  return (
+    <Container onResize={handleResize}>
+      {/* Window content */}
+    </Container>
+  );
+};
+```
+
+## Best Practices for Responsive Windows
+
+1. Use percentage-based sizing for main layout components.
+2. Utilize `Container` for flexible layouts.
+3. Implement custom responsive behavior using React hooks.
+4. Test your windows at various sizes and orientations.
+5. Consider using the `aspectRatio` prop for maintaining proportions.
+6. Use the `gap` prop for consistent spacing in layouts.
+
+By following these guidelines and leveraging UIKit's components, you can create responsive windows that adapt well to different sizes and orientations in your SpatialJS applications.
+
+For more detailed information on UIKit components and their props, refer to the UIKit documentation:
+
+```13:14:pages/get-started.mdx
+3. [Three.js](https://threejs.org/)
+4. [UIKit](https://github.com/pmndrs/uikit)
+```
+
+This will help you explore more advanced features and options for creating responsive designs in your SpatialJS windows.

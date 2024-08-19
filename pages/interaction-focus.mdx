@@ -1,0 +1,189 @@
+# Window Interaction and Focus Management
+
+When working with multiple windows in a 3D spatial environment, it's crucial to manage interactions, focus, and selection effectively. This guide will cover the key aspects of window interaction in SpatialJS.
+
+## Table of Contents
+
+1. Window Focus
+2. Window Selection
+3. Interaction Events
+4. Preventing Background Interactions
+5. Advanced Interaction Techniques
+
+## 1. Window Focus
+
+Focusing a window brings it to the forefront of the user's attention. In SpatialJS, you can manage window focus using the `useWindowStore` hook.
+
+```typescript
+import { useWindowStore } from '@spatialjs/core';
+
+const { focus, unfocus } = useWindowStore();
+
+// Focus a specific window
+focus('window-id');
+
+// Unfocus the currently focused window
+unfocus();
+```
+
+The `focus` function automatically handles bringing the window forward in the 3D space.
+
+## 2. Window Selection
+
+Window selection is different from focus. It allows you to keep track of which window the user has selected for potential actions. This is managed through the `useWindowStore` hook as well.
+
+```typescript
+import { useWindowStore } from '@spatialjs/core';
+
+const { selectedWindow, setSelectedWindow } = useWindowStore();
+
+// Select a window
+setSelectedWindow('window-id');
+
+// Get the currently selected window
+console.log(selectedWindow);
+```
+
+## 3. Interaction Events
+
+When working with interactive elements within windows, it's important to handle events correctly. Here's an example of how to set up click events on buttons within a window:
+
+```typescript
+import React from 'react';
+import { Button } from '@react-three/uikit';
+
+const WindowContent = () => {
+  const handleButtonClick = (e) => {
+    e.stopPropagation(); // Prevent the click from affecting the background
+    // Handle the button click
+  };
+
+  return (
+    <Button onClick={handleButtonClick}>
+      Click Me
+    </Button>
+  );
+};
+```
+
+## 4. Preventing Background Interactions
+
+To prevent interactions with the background or other windows when interacting with a specific window, you should use `stopPropagation()` on your event handlers. This is especially important for elements like the window title bar or resize handles.
+
+Here's an example of how you might implement this in a custom window component:
+
+```typescript
+import React from 'react';
+import { Container, Text } from '@react-three/uikit';
+import { useWindowStore } from '@spatialjs/core';
+
+const CustomWindow = ({ id, title, children }) => {
+  const { focus, setSelectedWindow } = useWindowStore();
+
+  const handleTitleBarInteraction = (e) => {
+    e.stopPropagation();
+    focus(id);
+    setSelectedWindow(id);
+  };
+
+  return (
+    <Container>
+      <Container onPointerDown={handleTitleBarInteraction}>
+        <Text>{title}</Text>
+      </Container>
+      {children}
+    </Container>
+  );
+};
+```
+
+## 5. Advanced Interaction Techniques
+
+For more advanced interactions, SpatialJS provides several utility functions through the `useWindowStore` hook. Here are some examples:
+
+```typescript
+import { useWindowStore } from '@spatialjs/core';
+
+const {
+  setPosition,
+  setScale,
+  minimize,
+  maximize,
+  close,
+  tileWindows
+} = useWindowStore();
+
+// Move a window
+setPosition('window-id', new THREE.Vector3(x, y, z));
+
+// Resize a window
+setScale('window-id', new THREE.Vector3(scaleX, scaleY, scaleZ));
+
+// Minimize a window
+minimize('window-id');
+
+// Maximize a window
+maximize('window-id');
+
+// Close a window
+close('window-id');
+
+// Tile all windows
+tileWindows('grid');
+```
+
+These functions allow you to create complex interactions and window management systems within your SpatialJS application.
+
+Remember, when implementing these interactions, always consider the user experience in a 3D spatial environment. Provide visual feedback for focus and selection, and ensure that window movements and resizing are smooth and intuitive.
+
+For more detailed information on the WindowStore and its methods, you can refer to the WindowStore documentation:
+
+```12:55:pages/window-store.mdx
+
+The WindowStore interface defines the state and methods for managing windows in a 3D spatial environment:
+
+```tsx
+interface WindowStore {
+  windows: Record<string, WindowInf>;
+  defaultTileDistance: number;
+  defaultFocusDistance: number;
+  addWindow: (
+    window: Omit<WindowInf, "component" | "props"> & {
+      component: React.ComponentType<any>;
+      props?: any;
+    }
+  ) => void;
+  removeWindow: (id: string) => void;
+  updateWindow: (id: string, updates: Partial<WindowInf>) => void;
+  updateWindowProps: (id: string, props: any) => void;
+  setPosition: (id: string, position: Vector3) => void;
+  setScale: (id: string, scale: Vector3) => void;
+  setRotation: (id: string, rotation: Euler) => void;
+  minimize: (id: string) => void;
+  maximize: (id: string) => void;
+  focus: (id: string) => void;
+  unfocus: (id: string) => void;
+  close: (id: string) => void;
+  tileWindows: (
+    mode: "grid" | "around" | "cockpit",
+    adjustScale?: boolean
+  ) => void;
+  resetWindowPositions: () => void;
+  originalPositions: Record<string, Vector3>;
+  originalScales: Record<string, Vector3>;
+  updateWindowSize: (id: string, size: Vector2) => void;
+  recalculateTilePositions: () => void;
+  currentTileMode: "grid" | "around" | "cockpit" | null;
+  camera: Camera | null;
+  setCamera: (camera: Camera) => void;
+  resetWindowInfrontOfCamera: () => void;
+  getPointInFrontOfCamera: (distance: number) => Vector3;
+  debug: boolean;
+  setDebug: (value: boolean) => void;
+  selectedWindow: string | undefined;
+  setSelectedWindow: (id: string) => void;
+}
+```
+
+
+This section of the documentation provides a comprehensive list of all available methods in the WindowStore, which you can use to create rich, interactive window management systems in your SpatialJS applications.
