@@ -80,13 +80,14 @@ To create your first window, import the `WindowManager` component from `spatialj
 ```tsx
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Text } from '@react-three/uikit';
 import { WindowManager } from '@spatialjs/core';
 function App() {
   return (
-    <Canvas>
-      <WindowManager />
-    </Canvas>
+    <div style={{ width: "100vw", height: "100vh" }}>
+      <Canvas gl={{ localClippingEnabled: true }}>
+        <WindowManager />
+      </Canvas>
+    </div>
   );
 }
 export default App;
